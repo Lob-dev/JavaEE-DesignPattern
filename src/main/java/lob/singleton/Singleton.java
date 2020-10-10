@@ -1,5 +1,7 @@
 package lob.singleton;
 
+import java.net.Socket;
+
 public class Singleton {
     /*
     하나의 인스턴스만 생성하고 전역에서 공유하는 방식.
@@ -11,6 +13,8 @@ public class Singleton {
 
     해당 클래스에서 소스들을 모두 구현하기에 Local Static Class 로 작성한다.
      */
+
+
 
 
     //
@@ -48,4 +52,20 @@ public class Singleton {
     }
 
     */
+
+
+    /* 생성 요청이 아닌 Class Loader 에 의한 Loading 시 Singleton 생성하기
+    private final static Singleton instance = new Singleton();
+
+    private Singleton() {}
+
+    public static Singleton getInstance() {
+        return instance;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(instance.toString());
+    }
+    */
+
 }
