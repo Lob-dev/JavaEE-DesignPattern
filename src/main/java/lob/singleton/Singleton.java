@@ -85,39 +85,9 @@ public class Singleton {
 
 
 /*
-
     Double-checked locking Singleton.
     인스턴스 생성 여부를 임계 영역을 통한 잠금 이전에 1번. 잠금 이후에 객체 생성 이전에 한번 진행하는 방식이다.
     해당 방식도 Reflection API 를 통하여 생성자의 접근 수정자를 public 으로 바꾼다면 싱글톤을 만들 수 있다.
-
-    public static void main(String[] args) throws Exception {
-
-        // Reflection API 을 통한 여러 Singleton? 객체 만들기
-
-        Singleton instance1 = Singleton.getInstance();
-        Singleton instance2 = null;
-
-        try {
-            Class<Singleton> c = Singleton.class;
-
-            // 접근 설정자와 상관없이 모든 생성자에 접근할 수 있다. getDeclaredConstructor();
-            var constructor = c.getDeclaredConstructor();
-
-            // 가져온 생성자의 Private 접근 설정에 대하여서 접근 가능하게끔 설정한다.
-            constructor.setAccessible(true);
-
-            // constructor 객체의 새성자를 사용하여 인스턴스를 만들고 초기화한 다음, 초기화 매개 변수를 통해 클래스를 선언한다.
-            instance2 = constructor.newInstance();
-
-        //NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("instance2 = " + instance1);
-        System.out.println("instance2 = " + instance2);
-
-    }
 
     private static Singleton instance;
 
@@ -132,6 +102,38 @@ public class Singleton {
             }
         }
         return instance;
+    }
+
+
+    public static void main(String[] args) throws Exception {
+
+        // Reflection API 을 통한 여러 Singleton 객체 만들기
+
+        Singleton instance1 = Singleton.getInstance();
+        Singleton instance2 = null;
+        Singleton instance3 = null;
+        try {
+            Class<Singleton> c = Singleton.class;
+
+            // 접근 설정자와 상관없이 모든 생성자에 접근할 수 있다. getDeclaredConstructor();
+            var constructor = c.getDeclaredConstructor();
+
+            // 가져온 생성자의 Private 접근 설정에 대하여서 접근 가능하게끔 설정한다.
+            constructor.setAccessible(true);
+
+            // constructor 객체의 새성자를 사용하여 인스턴스를 만들고 초기화한 다음, 초기화 매개 변수를 통해 클래스를 선언한다.
+            instance2 = constructor.newInstance();
+            instance3 = constructor.newInstance();
+
+        //NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("instance2 = " + instance1);
+        System.out.println("instance2 = " + instance2);
+        System.out.println("instance2 = " + instance3);
+
     }
 */
 
