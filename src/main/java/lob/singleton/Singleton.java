@@ -1,5 +1,8 @@
 package lob.singleton;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.Socket;
 
 public class Singleton {
@@ -13,9 +16,6 @@ public class Singleton {
 
     해당 클래스에서 소스들을 모두 구현하기에 Local Static Class 로 작성한다.
      */
-
-
-
 
     //
     //
@@ -66,6 +66,73 @@ public class Singleton {
     public static void main(String[] args) {
         System.out.println(instance.toString());
     }
+
     */
+
+    /* 생성자 호출 전에 초기화 되는 Static Block 을 통한 Lazy initialization Singleton
+    private static Singleton instance = null;
+
+    static {
+        instance = new Singleton();
+    }
+
+    private Singleton() {};
+
+    public static Singleton getInstance() {
+        return  instance;
+    }
+    */
+
+
+/*
+
+    Double-checked locking Singleton.
+    인스턴스 생성 여부를 임계 영역을 통한 잠금 이전에 1번. 잠금 이후에 객체 생성 이전에 한번 진행하는 방식이다.
+    해당 방식도 Reflection API 를 통하여 생성자의 접근 수정자를 public 으로 바꾼다면 싱글톤을 만들 수 있다.
+
+    public static void main(String[] args) throws Exception {
+
+        // Reflection API 을 통한 여러 Singleton? 객체 만들기
+
+        Singleton instance1 = Singleton.getInstance();
+        Singleton instance2 = null;
+
+        try {
+            Class<Singleton> c = Singleton.class;
+
+            // 접근 설정자와 상관없이 모든 생성자에 접근할 수 있다. getDeclaredConstructor();
+            var constructor = c.getDeclaredConstructor();
+
+            // 가져온 생성자의 Private 접근 설정에 대하여서 접근 가능하게끔 설정한다.
+            constructor.setAccessible(true);
+
+            // constructor 객체의 새성자를 사용하여 인스턴스를 만들고 초기화한 다음, 초기화 매개 변수를 통해 클래스를 선언한다.
+            instance2 = constructor.newInstance();
+
+        //NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("instance2 = " + instance1);
+        System.out.println("instance2 = " + instance2);
+
+    }
+
+    private static Singleton instance;
+
+    private Singleton() {};
+
+    public static Singleton getInstance() {
+        if (instance == null) { // 1중 잠금
+            synchronized (Singleton.class){
+                if (instance == null){ // 2중 잠금
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+*/
 
 }
