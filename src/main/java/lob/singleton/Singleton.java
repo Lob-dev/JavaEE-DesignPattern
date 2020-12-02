@@ -84,7 +84,7 @@ public class Singleton {
     */
 
 
-/*
+    /*
     Double-checked locking Singleton.
     인스턴스 생성 여부를 임계 영역을 통한 잠금 이전에 1번. 잠금 이후에 객체 생성 이전에 한번 진행하는 방식이다.
     해당 방식도 Reflection API 를 통하여 생성자의 접근 수정자를 public 으로 바꾼다면 싱글톤을 만들 수 있다.
@@ -129,12 +129,9 @@ public class Singleton {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         System.out.println("instance2 = " + instance1);
         System.out.println("instance2 = " + instance2);
         System.out.println("instance2 = " + instance3);
-
     }
-*/
-
+    */
 }
