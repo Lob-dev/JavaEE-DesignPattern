@@ -1,9 +1,4 @@
-package lob.singleton;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.Socket;
+package lob.code.singleton;
 
 public class Singleton {
     /*
@@ -88,6 +83,7 @@ public class Singleton {
     Double-checked locking Singleton.
     인스턴스 생성 여부를 임계 영역을 통한 잠금 이전에 1번. 잠금 이후에 객체 생성 이전에 한번 진행하는 방식이다.
     해당 방식도 Reflection API 를 통하여 생성자의 접근 수정자를 public 으로 바꾼다면 싱글톤을 만들 수 있다.
+    */
 
     private static Singleton instance;
 
@@ -106,7 +102,6 @@ public class Singleton {
 
 
     public static void main(String[] args) throws Exception {
-
         // Reflection API 을 통한 여러 Singleton 객체 만들기
 
         Singleton instance1 = Singleton.getInstance();
@@ -133,5 +128,4 @@ public class Singleton {
         System.out.println("instance2 = " + instance2);
         System.out.println("instance2 = " + instance3);
     }
-    */
 }

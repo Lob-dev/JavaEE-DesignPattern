@@ -1,4 +1,4 @@
-package lob.singleton;
+package lob.code.facade;
 
 public class Facade {
     /*
