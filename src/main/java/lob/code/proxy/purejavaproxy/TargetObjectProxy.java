@@ -14,4 +14,5 @@ public class TargetObjectProxy implements TargetObject {
 
         return subject.someMethod(name) + ("After proxy\n");
     }
+
 }

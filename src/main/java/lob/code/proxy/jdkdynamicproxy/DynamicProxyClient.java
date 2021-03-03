@@ -1,7 +1,14 @@
 package lob.code.proxy.jdkdynamicproxy;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /*
     JDK API Dynamic Proxy
@@ -24,7 +31,7 @@ public class DynamicProxyClient {
     }
 
     TargetObject realObject = (TargetObject) Proxy.newProxyInstance(TargetObject.class.getClassLoader(), new Class[]{TargetObject.class},
-            (InvocationHandler) (proxy, method, args) -> {
+            (proxy, method, args) -> {
                 TargetObject targetObject = new TargetObjectImpl();
 
                 System.out.println("Before Proxy");
