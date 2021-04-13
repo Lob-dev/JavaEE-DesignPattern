@@ -35,10 +35,7 @@ public class RefactoringGildedRose {
 		this.items = items;
 	}
 
-	// quality 품질
-	// sellIn 유통기한
-
-	private void addQuality(Item item, int sellIn, int quality) {
+	private void increaseQualityWhenLessThanGivenQualityAndSellIn(final Item item, int sellIn, int quality) {
 		if (item.sellIn < sellIn) {
 			if (item.quality < quality) {
 				++item.quality;
@@ -46,62 +43,76 @@ public class RefactoringGildedRose {
 		}
 	}
 
-	public void agedBrie(Item item) {
-
-		--item.sellIn;
-
-		if (item.quality < 50) {
-			++item.quality;
-		}
-
-		if (item.sellIn >= 0) return;
-
-		if (item.quality < 50) {
+	private void increaseQualityWhenLessThanGivenQuality(final Item item, int quality) {
+		if (item.quality < quality) {
 			++item.quality;
 		}
 	}
 
-	public void backstagePassesToATafkal80etConcert(Item item) {
-
-		if (item.quality < 50) {
-			++item.quality;
-
-			addQuality(item, 11, 50);
-			addQuality(item, 6, 50);
+	private void reduceQualityWhenLessThanGivenQuality(final Item item, int quality) {
+		if (item.quality > quality) {
+			--item.quality;
 		}
-		--item.sellIn;
+	}
 
-		if (item.sellIn < 0) {
+	private void zeroQualityWhenLessThanGivenSellIn(final Item item, int sellIn) {
+		if (item.sellIn < sellIn) {
 			item.quality = 0;
 		}
 	}
 
-	public void muyaho(Item item) {
-
+	private void reduceShelfLife(final Item item) {
 		--item.sellIn;
+	}
 
-		if (item.quality > 0) {
-			--item.quality;
-		}
+	public void agedBrie(Item item) {
+
+		reduceShelfLife(item);
+
+		increaseQualityWhenLessThanGivenQuality(item, 50);
 
 		if (item.sellIn >= 0) return;
 
-		if (item.quality > 0) {
-			--item.quality;
-		}
+		increaseQualityWhenLessThanGivenQuality(item, 50);
 	}
 
-	public void addQuality() {
+	public void backstagePasses(Item item) {
+
+		if (item.quality < 50) {
+			++item.quality;
+
+			increaseQualityWhenLessThanGivenQualityAndSellIn(item, 11, 50);
+
+			increaseQualityWhenLessThanGivenQualityAndSellIn(item, 6, 50);
+		}
+
+		reduceShelfLife(item);
+
+		zeroQualityWhenLessThanGivenSellIn(item, 0);
+	}
+
+	public void anotherItems(Item item) {
+
+		reduceShelfLife(item);
+
+		reduceQualityWhenLessThanGivenQuality(item, 0);
+
+		if (item.sellIn >= 0) return;
+
+		reduceQualityWhenLessThanGivenQuality(item, 0);
+	}
+
+	public void increaseQuality() {
 
 		for (Item item : items) {
 
 			if ("Aged Brie".equals(item.name)) {
 				agedBrie(item);
 			} else if ("Backstage passes to a TAFKAL80ETC concert".equals(item.name)) {
-				backstagePassesToATafkal80etConcert(item);
+				backstagePasses(item);
 			} else if ("Sulfuras, Hand of Ragnaros".equals(item.name)) {
 			} else {
-				muyaho(item);
+				anotherItems(item);
 			}
 		}
 
